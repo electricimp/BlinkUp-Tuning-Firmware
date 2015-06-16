@@ -5,49 +5,37 @@
 // BlinkUp Tuning Device Code
 // Collects LightLevel samples and sends them to the agent to be graphed
 
-class BlinkUpTuner {
+const NUMSAMPLES = 5000; // Sampling duration in seconds
+
+function captureBlinkUp(dummy = null) {
+    // disable actual BlinkUp so that tuning tests don't reconfigure this device
+    // to use BlinkUp to reconfigure the device under test, power cycle the
+    // device under test and BlinkUp within 1 minute
+    imp.enableblinkup(false);
     
-    static DURATION = 5; // Sampling duration in seconds
+    // pre-allocate some space in the blob, assuming ~ 1k samples / second
+    // blob will be grown if necessary
+    local _blinkupData = blob(NUMSAMPLES);
     
-    // blinkupData will be sent to the agent to be graphed
-    _blinkupData = null;
-     
-    constructor() {
-        return;   
+    // alias repeatedly-called methods for speed
+    local u = hardware.micros.bindenv(hardware);
+    local l = hardware.lightlevel.bindenv(hardware);
+    // sample start and end times to adjust delay for ~ 1kHz sampling
+    local prev = null;
+    local now = null;
+    
+    // tight loop to collect samples
+    prev = u();
+    for (local n = 0; n < NUMSAMPLES; n++) {
+        _blinkupData.writen(u(), 'i'); // timestamp
+        _blinkupData.writen(l(), 'w'); // lightlevel
+        now = u();
+        imp.sleep(0.001 - ((now - prev) / 1000000.0));
+        prev = now;
     }
     
-    function start() {
-        // disable actual BlinkUp so that tuning tests don't reconfigure this device
-        // to use BlinkUp to reconfigure the device under test, power cycle the
-        // device under test and BlinkUp within 1 minute
-        imp.enableblinkup(false);
-        
-        // pre-allocate some space in the blob, assuming ~ 1k samples / second
-        // blob will be grown if necessary
-        _blinkupData = blob(DURATION * 1000);
-        
-        // alias repeatedly-called methods for speed
-        local u = hardware.micros.bindenv(hardware);
-        local l = hardware.lightlevel.bindenv(hardware);
-        // sample start and end times to adjust delay for ~ 1kHz sampling
-        local s = null;
-        local e = null;
-        
-        // tight loop to collect samples
-        for (local n = 0; n < DURATION * 1000; n++) {
-            s = u();
-            _blinkupData.writen(u(), 'i'); // timestamp
-            _blinkupData.writen(l()/128, 'w'); // lightlevel
-            e = u();
-            imp.sleep(0.001 - ((e - s) / 1000000.0));
-        }
-        
-        _blinkupData.seek(0);
-        agent.send("blinkupData", _blinkupData);
-    }
+    _blinkupData.seek(0);
+    agent.send("blinkupData", _blinkupData);
 }
 
-blinkupTuner <- BlinkUpTuner();
-agent.on("start", function(dummy) {
-    blinkupTuner.start();
-});
+agent.on("start", captureBlinkUp);
