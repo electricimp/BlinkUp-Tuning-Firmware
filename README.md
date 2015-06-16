@@ -22,9 +22,6 @@ Simply include the utility on both the device and agent side, and the utility wi
 #require "BlinkUpTuner.device.nut:1.0"
 ```
 
-#require 
-
-
 ## License
 
 The NeoPixel class is licensed under the [MIT License](./LICENSE).
