@@ -5,7 +5,7 @@
 // BlinkUp Tuning Device Code
 // Collects LightLevel samples and sends them to the agent to be graphed
 
-class BlinkupTuner {
+class BlinkUpTuner {
     
     static DURATION = 5; // Sampling duration in seconds
     
@@ -47,11 +47,7 @@ class BlinkupTuner {
     }
 }
 
-server.log("BlinkUp Tuner Running on Device");
-server.log("SW Version: " + imp.getsoftwareversion());
-server.log("Memory Free: " + imp.getmemoryfree());
-
-blinkupTuner <- BlinkupTuner();
+blinkupTuner <- BlinkUpTuner();
 agent.on("start", function(dummy) {
     blinkupTuner.start();
 });
