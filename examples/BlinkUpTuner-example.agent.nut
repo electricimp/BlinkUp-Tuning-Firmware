@@ -1,33 +1,3 @@
-# BlinkUp&trade; Tuner Utility
-
-This utility simplifies the process of tuning the BlinkUp receiver circuit for your imp-based device.
-
-BlinkUp&trade; uses light and dark pulses, typically from a smartphone screen or an LED, to convey WiFi credentials and provisioning information to an imp. Light levels are detected with a simple circuit which uses a phototransistor and gain resistor to translate light level into a voltage signal. The value of the gain resistor must be carefully selected to acheive the best possibile BlinkUp reliability given your phototransistor and mechanical design.
-
-This utility collects [hardware.lightlevel](https://electricimp.com/docs/api/hardware/lightlevel) samples during BlinkUp and produces a graph, which can be used to determine how the gain resistor should be adjusted to optimize BlinkUp. See [How to Tune Your BlinkUp Circuit](https://electricimp.com/docs/hardware/blinkuptuning/) in the Electric Imp Developer Center.
-
-## Usage
-
-Create a new model, and run the below code (which mirrors the [example](./examples)). For more information, see the [Hardware BlinkUp Tuning Guide](https://electricimp.com/docs/hardware/blinkuptuning/).
-
-### Device Code
-
-```Squirrel
-// Copyright (c) 2015 Electric Imp
-// This file is licensed under the MIT License
-// http://opensource.org/licenses/MIT
-//
-// BlinkUp Tuning Device Code
-// Collects LightLevel samples and sends them to the agent to be graphed
-
-#require "BlinkUpTuner.device.nut:1.0"
-
-agent.on("start", BlinkUpTuner.captureBlinkUp);
-```
-
-### Agent Code
-
-```Squirrel
 // Copyright (c) 2015 Electric Imp
 // This file is licensed under the MIT License
 // http://opensource.org/licenses/MIT
@@ -78,8 +48,3 @@ app.post("/start", function(context) {
     // to this web app when the device is done collecting data
     c = context;
 });
-```
-
-# License
-
-The BlinkUpTuner library is licensed under the [MIT License](./LICENSE).
