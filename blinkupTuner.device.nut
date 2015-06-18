@@ -12,18 +12,18 @@ function captureBlinkUp(dummy = null) {
     // to use BlinkUp to reconfigure the device under test, power cycle the
     // device under test and BlinkUp within 1 minute
     imp.enableblinkup(false);
-    
+
     // pre-allocate some space in the blob, assuming ~ 1k samples / second
     // blob will be grown if necessary
     local _blinkupData = blob(NUMSAMPLES);
-    
+
     // alias repeatedly-called methods for speed
     local u = hardware.micros.bindenv(hardware);
     local l = hardware.lightlevel.bindenv(hardware);
     // sample start and end times to adjust delay for ~ 1kHz sampling
     local prev = null;
     local now = null;
-    
+
     // tight loop to collect samples
     prev = u();
     for (local n = 0; n < NUMSAMPLES; n++) {
@@ -33,7 +33,7 @@ function captureBlinkUp(dummy = null) {
         imp.sleep(0.001 - ((now - prev) / 1000000.0));
         prev = now;
     }
-    
+
     _blinkupData.seek(0);
     agent.send("blinkupData", _blinkupData);
 }
