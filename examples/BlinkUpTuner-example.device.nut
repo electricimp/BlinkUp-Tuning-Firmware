@@ -7,4 +7,6 @@
 
 #require "BlinkUpTuner.device.nut:1.0"
 
-agent.on("start", BlinkUpTuner.captureBlinkUp);
+agent.on("start", function(dummy) {
+    agent.send("blinkupData", BlinkUpTuner.captureBlinkUp());
+});

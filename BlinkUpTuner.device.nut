@@ -37,6 +37,6 @@ class BlinkUpTuner {
         }
 
         _blinkupData.seek(0);
-        return _blinkUpData;
+        return _blinkupData;
     }
 }

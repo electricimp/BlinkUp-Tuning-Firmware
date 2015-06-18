@@ -9,7 +9,7 @@
 //---------HTML----------------------------------------------------------------
 
 BlinkUpTuner <- {
-    html <- @"
+    html = @"
     <html>
       <head>
         <script type='text/javascript'src='https://www.google.com/jsapi'></script>
