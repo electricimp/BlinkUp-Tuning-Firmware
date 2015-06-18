@@ -15,7 +15,7 @@ v <- null; // collected BlinkUp data ("values")
 
 // DEVICE CALLBACKS ------------------------------------------------------------
 
-device.on("blinkupData", function(values){
+device.on("blinkupData", function(values) {
     local time, val, offset;
     server.log("Done collecting, graphing BlinkUp");
 
