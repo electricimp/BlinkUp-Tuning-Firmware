@@ -38,7 +38,7 @@ device.on("blinkupData", function(values){
 app <- Rocky({timeout = 60});
 
 // Serve the web app to any request to the root agent URL
-app.get("/", function(context) { context.send(200, html); });
+app.get("/", function(context) { context.send(200, BlinkUpTuner.html); });
 
 // Start collecting data when requested by the web app
 app.post("/start", function(context) {
