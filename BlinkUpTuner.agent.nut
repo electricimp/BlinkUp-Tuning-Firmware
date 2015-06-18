@@ -3,7 +3,7 @@
 // http://opensource.org/licenses/MIT
 //
 // BlinkUp Tuning Agent Code
-// Web UI to graph LightLevel samples from the agent, 
+// Web UI to graph LightLevel samples from the agent,
 // used to tune the BlinkUp Receiver
 
 //---------HTML----------------------------------------------------------------
