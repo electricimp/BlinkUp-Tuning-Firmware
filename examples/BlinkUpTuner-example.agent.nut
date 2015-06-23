@@ -21,7 +21,7 @@ device.on("blinkupData", function(values) {
 
     // unpack the blob of timestamps and light levels
     offset = values.readn('i');
-    val  = 1.0 - (values.readn('w') / 65535.0);
+    val = (values.readn('w') / 65535.0);
     v = [[0, val]];
     while (!values.eos()) {
         time = values.readn('i');
