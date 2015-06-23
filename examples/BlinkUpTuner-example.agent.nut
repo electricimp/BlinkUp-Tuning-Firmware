@@ -25,7 +25,7 @@ device.on("blinkupData", function(values) {
     v = [[0, val]];
     while (!values.eos()) {
         time = values.readn('i');
-        val  = 1.0 - (values.readn('w') / 65535.0);
+        val = (values.readn('w') / 65535.0);
         v.append( [ (time - offset) / 1000000.0, val ] );
     };
 
