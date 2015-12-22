@@ -68,7 +68,7 @@ BlinkUpTuner <- {
                 url: window.location +'/start',
                 data: '',
                 success: drawVisualization,
-                timeout: 120000,
+                timeout: 15000,
                 error: (function(err){
                     console.log(err);
                     console.log('Error parsing device info from imp');
